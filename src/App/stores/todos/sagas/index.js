@@ -25,14 +25,26 @@ export function* receiveResponse (response) {
   }
 }
 
+export function* receiveResponseLists (response) {
+  if (response.ok) {
+    const todo = normalize(response.data.list, schema.list)
+
+    yield put(actions.setList(todo, {type: 'lists'}))
+  } else {
+    const error = response.data.error
+
+    yield put(actions.requestFailure(error, {type: 'lists'}))
+  }
+}
+
 export function* addTodo () {
   while (true) {
     const action = yield take(t.SUBMIT_ENTITY)
     if (action.meta && action.meta.type === 'todos') {
       const todo = {
-        ...action.payload,
-        listID: 1 // Change this to support multiple lists
-      }
+        ...{text: action.payload.text},
+        listID: action.payload.id // Change this to support multiple lists
+      };
 
       const response = yield call(api.post, '/todos', {...todo})
 
@@ -53,6 +65,21 @@ export function* toggleTodo () {
   }
 }
 
+export function* addList () {
+  while (true) {
+    const action = yield take(t.SUBMIT_LIST)
+    if (action.meta && action.meta.type === 'list') {
+      let todo = {
+         name: action.payload.list
+      };
+
+
+      const response = yield call(api.post, '/lists/g', {...todo})
+
+      yield fork(receiveResponseLists, response)
+    }
+  }
+}
 /*
  * Watchers
  */
@@ -60,6 +87,7 @@ export function* toggleTodo () {
 export default function* watchTodos () {
   yield [
     fork(addTodo),
+    fork(addList),
     fork(toggleTodo)
   ]
 }

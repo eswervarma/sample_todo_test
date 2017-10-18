@@ -13,6 +13,9 @@ export const submitEntity = createAction('resources/SUBMIT_ENTITY', p => p, (p, 
 export const updateEntity = createAction('resources/UPDATE_ENTITY', p => p, (p, m) => ({...m, method: 'update'}))
 export const deleteEntity = createAction('resources/DELETE_ENTITY', p => p, (p, m) => m)
 
+export const submitList = createAction('resources/SUBMIT_LIST', p => p, (p,m) => m);
+export const setList = createAction('resources/SET_LIST', p => p, (p,m) => m);
+
 export const requestStart = createAction('resources/REQUEST_START', p => p, (p, m) => m)
 export const requestSuccess = createAction('resources/REQUEST_SUCCESS', p => p, (p, m) => m)
 export const requestFailure = createAction('resources/REQUEST_FAILURE', p => p, (p, m) => m)

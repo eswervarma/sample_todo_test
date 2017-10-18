@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react'
-
 import classNames from 'classnames'
-
-const Todo = ({ text, completed, toggle, isLast }) => {
+import { Link } from 'react-router';
+const Todo = ({ text, completed, toggle, isLast,link }) => {
   const todoClass = classNames(
     'ph3 pv3 pointer bg-animate hover-bg-light-gray',
     {
@@ -10,10 +9,15 @@ const Todo = ({ text, completed, toggle, isLast }) => {
       'strike i': completed
     }
   )
-
-  return (
-    <li className={todoClass} onClick={() => toggle()}>{text}</li>
-  )
+  if(link){
+    return (
+      <li className={todoClass}><Link className="f4 fw6 db black link dim" to={'/'+link}>{text}</Link></li>
+    )
+  }else{
+    return (
+      <li className={todoClass} onClick={() => toggle()}>{text}</li>
+    )
+  }
 }
 
 Todo.propTypes = {

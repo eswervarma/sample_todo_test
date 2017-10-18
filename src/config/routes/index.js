@@ -18,11 +18,14 @@ const Todos = (nextState, cb) => {
     .catch((e) => { throw e })
 }
 
+import TodosEachList from '../../App/screens/Todos/components/TodoList'
+
 // We use `getComponent` to dynamically load routes.
 // https://github.com/reactjs/react-router/blob/master/docs/guides/DynamicRouting.md
 const routes = (
-  <Route path='/' component={App}>
+  <Route path='/' exact component={App}>
     <IndexRoute getComponent={Todos} />
+    <Route path="/:id" exact component={TodosEachList}/>
   </Route>
 )
 

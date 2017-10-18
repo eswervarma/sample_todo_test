@@ -1,13 +1,23 @@
 import React, { PropTypes } from 'react'
 
-const App = ({ children }) => {
-  return (
-    <div>
-      {children}
-    </div>
-  )
-}
+export class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {}
+  }
 
+  componentWillUpdateProps(props) {
+    this.props = props;
+  }
+
+  render(){
+    return (
+      <div>
+        {this.props.children}
+      </div>
+    )
+  }
+}
 App.propTypes = {
   children: PropTypes.node
 }

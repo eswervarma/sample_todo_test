@@ -11,12 +11,14 @@ import { createSelector } from 'reselect'
 
 import byId, * as fromById from './byId'
 import idsList, * as fromIdsList from './idsList'
+import lists, * as fromList from './lists';
 import status, * as fromStatus from './status'
 import pagination, * as fromPagination from './pagination'
 
 export default (type) => combineReducers({
   byId: byId(type),
   idsList: idsList(type),
+  lists: lists(type),
   status: status(type),
   pagination: pagination(type)
 })
@@ -26,7 +28,11 @@ export const getEntity = (type, id) => createSelector(
   state => fromById.getEntity(state[type].byId, id),
   entity => { if (entity) return entity }
 )
-
+//get All the list
+export const getLists = (type) => createSelector(
+  state => state,
+  state => fromList.getIds(state[type].lists)
+)
 // Get all items in a state of this reducer
 export const getEntities = (type) => createSelector(
   state => state,
